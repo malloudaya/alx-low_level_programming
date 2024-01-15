@@ -1,19 +1,6 @@
 #include "main.h"
 #include <stdlib.h>
 /**
- * _strlen - find lenght of a string
- * @s: string
- * Return: integer
- */
-int _strlen(char *s)
-{
-	int size = 0;
-
-	for (; s[size] != '\0'; size++)
-	;
-	return (size);
-}
-/**
  * str_concat - concatenates two strings
  * @s1: first string
  * @s2: second string
@@ -21,25 +8,44 @@ int _strlen(char *s)
  */
 char *str_concat(char *s1, char *s2)
 {
-	int size1, size2, i;
-	char *m;
+	char *a;
+	unsigned int i, j, k, p, combolen;
+	unsigned int len1 = 0, len2 = 0;
 
 	if (s1 == NULL)
-		s1 = '\0';
+		s1 = "";
 	if (s2 == NULL)
-		s2 = '\0';
-	size1 = _strlen(s1);
-	size2 = _strlen(s2);
-	m = malloc((size1 + size2) * sizeof(char) + 1);
-	if (m == NULL)
-		return (NULL);
-	for (i = 0; i <= size1 + size2; i++)
+		s2 = "";
+	j = 0;
+	while (*(s1 + j) != '\0')
 	{
-		if (i < size1)
-			m[i] = s1[i];
-		else
-			m[i] = s2[i - size1];
+		len1++;
+		j++;
 	}
-	m[i] = '\0';
-	return (m);
+	k = 0;
+	while (*(s2 + k) != '\0')
+	{
+		len2++;
+		k++;
+	}
+	combolen = len1 + len2;
+	a = malloc((combolen + 1) * sizeof(char));
+	if (a == NULL)
+		return (NULL);
+	i = 0;
+	while (i < len1)
+	{
+		*(a + i) = *(s1 + i);
+		i++;
+	}
+	j = len1;
+	p = 0;
+	while (j < combolen)
+	{
+		*(a + j) = *(s2 + p);
+		j++;
+		p++;
+	}
+	*(a + combolen) = '\0';
+	return (a);
 }
